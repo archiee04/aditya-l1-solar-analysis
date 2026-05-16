@@ -1,153 +1,89 @@
-# \# Aditya L1: Solar Flare Impact Analysis ☀️
+# Aditya L1: Solar Flare Impact Analysis ☀️
+### Space Weather Forecasting & Mitigation Research
 
-# \### Space Weather Forecasting \& Mitigation Research
+> Predicting high-intensity solar flare impacts on Earth's communication and power infrastructure — using ISRO's Aditya L1 mission data.
 
-# 
+[![Python](https://img.shields.io/badge/Python-Analysis-3776AB?logo=python)](https://python.org/)
+[![XGBoost](https://img.shields.io/badge/XGBoost-ML_Model-FF6600)](https://xgboost.readthedocs.io/)
+[![Research](https://img.shields.io/badge/Status-Paper_In_Review-brightgreen)]()
+[![Program](https://img.shields.io/badge/Thapar-Satellite_Program-blue)]()
 
-# > Predicting high-intensity solar flare impacts on Earth's communication and power infrastructure — using ISRO's Aditya L1 mission data.
+---
 
-# 
+## Overview
 
-# \[!\[Python](https://img.shields.io/badge/Python-Analysis-3776AB?logo=python)](https://python.org/)
+This project is part of the **Thapar Satellite Program** and focuses on analysing data from ISRO's Aditya L1 mission — India's first dedicated solar observatory — to model and predict the severity of solar flare impacts on terrestrial systems.
 
-# \[!\[XGBoost](https://img.shields.io/badge/XGBoost-ML\_Model-FF6600)](https://xgboost.readthedocs.io/)
+Solar flares and Coronal Mass Ejections (CMEs) pose serious threats to satellite communications, GPS systems, and power grids. This work applies machine learning to real and simulated mission data to build a preliminary early-warning model, with a co-authored research paper currently under review.
 
-# \[!\[Research](https://img.shields.io/badge/Status-Paper\_In\_Review-brightgreen)]()
+---
 
-# \[!\[Program](https://img.shields.io/badge/Thapar-Satellite\_Program-blue)]()
+## Research Scope
 
-# 
+- 100+ hours of research across Aditya L1's 7 scientific payloads and mission objectives
+- Analysis of 5,000–6,000 rows of real and simulated satellite data
+- Coverage of 20+ CME events and solar wind pattern datasets
+- Applied XGBoost classifier achieving **75.6% accuracy** in impact severity prediction
+- Co-authored peer-reviewed paper on mitigation strategies for high-intensity solar flare events
 
-# \---
+---
 
-# 
+## Aditya L1 Payloads Covered
 
-# \## Overview
+| Payload | Purpose |
+|---|---|
+| VELC | Continuous solar corona imaging |
+| SUIT | UV imaging of photosphere and chromosphere |
+| SoLEXS | Soft X-ray spectrometer for flare monitoring |
+| HEL1OS | Hard X-ray flare detection |
+| ASPEX | Solar wind particle analysis |
+| PAPA | Proton and alpha particle detection |
+| MAG | In-situ magnetic field measurements at L1 |
 
-# 
+---
 
-# This project is part of the \*\*Thapar Satellite Program\*\* and focuses on analysing data from ISRO's Aditya L1 mission — India's first dedicated solar observatory — to model and predict the severity of solar flare impacts on terrestrial systems.
+## Machine Learning Model
 
-# 
+**Model:** XGBoost Classifier  
+**Target:** Solar flare impact severity (low / moderate / high)  
+**Accuracy:** 75.6% (preliminary)
 
-# Solar flares and Coronal Mass Ejections (CMEs) pose serious threats to satellite communications, GPS systems, and power grids. This work applies machine learning to real and simulated mission data to build a preliminary early-warning model, with a co-authored research paper currently under review.
+**Features used:**
+- X-ray flux intensity (SoLEXS/HEL1OS)
+- CME speed and angular width
+- Solar wind velocity and density (ASPEX)
+- Magnetic field B-component readings (MAG)
+- Flare class (A/B/C/M/X)
 
-# 
+**Pipeline:**
+- Rolling window features (7-day mean, std, max)
+- Rate of change via .diff()
+- Exponentially Weighted Moving Averages (EWMA)
+- Chronological train/test split (80/20)
+- StandardScaler fitted only on training data
+- Sliding window (3-day lag) for supervised learning format
+- Sample weights to handle class imbalance (M and X class flares)
 
-# \---
+---
 
-# 
+## Project Structure
 
-# \## Research Scope
-
-# 
-
-# \- 100+ hours of research across Aditya L1's 7 scientific payloads and mission objectives
-
-# \- Analysis of 5,000–6,000 rows of real and simulated satellite data
-
-# \- Coverage of 20+ CME events and solar wind pattern datasets
-
-# \- Applied XGBoost classifier achieving \*\*75.6% accuracy\*\* in impact severity prediction
-
-# \- Co-authored peer-reviewed paper on mitigation strategies for high-intensity solar flare events
-
-# 
-
-# \---
-
-# 
-
-# \## Aditya L1 Payloads Covered
-
-# 
-
-# | Payload | Purpose |
-
-# |---|---|
-
-# | VELC | Continuous solar corona imaging |
-
-# | SUIT | UV imaging of photosphere and chromosphere |
-
-# | SoLEXS | Soft X-ray spectrometer for flare monitoring |
-
-# | HEL1OS | Hard X-ray flare detection |
-
-# | ASPEX | Solar wind particle analysis |
-
-# | PAPA | Proton and alpha particle detection |
-
-# | MAG | In-situ magnetic field measurements at L1 |
-
-# 
-
-# \---
-
-# 
-
-# \## Machine Learning Model
-
-# 
-
-# \*\*Model:\*\* XGBoost Classifier  
-
-# \*\*Target:\*\* Solar flare impact severity (low / moderate / high)  
-
-# \*\*Accuracy:\*\* 75.6% (preliminary)
-
-# 
-
-# \*\*Features used:\*\*
-
-# \- X-ray flux intensity (SoLEXS/HEL1OS)
-
-# \- CME speed and angular width
-
-# \- Solar wind velocity and density (ASPEX)
-
-# \- Magnetic field B-component readings (MAG)
-
-# \- Flare class (A/B/C/M/X)
-
-# 
-
-# ```python
-
-# import xgboost as xgb
-
-# from sklearn.metrics import accuracy\_score
-
-# 
-
-# model = xgb.XGBClassifier(n\_estimators=100, max\_depth=6, learning\_rate=0.1)
-
-# model.fit(X\_train, y\_train)
-
-# preds = model.predict(X\_test)
-
-# print(f"Accuracy: {accuracy\_score(y\_test, preds):.1%}")
-
-# ```
-
-# 
-
-# \---
-
-# 
-
-# \## Project Structure
+    aditya-l1-solar-analysis/
+    ├── data/
+    │   └── Solar_Flare_dataset_final.csv
+    ├── notebooks/
+    │   └── Model2.ipynb
+    ├── .gitignore
+    └── README.md
 
 ---
 
 ## Getting Started
 
-```bash
-git clone https://github.com/archiee04/aditya-l1-solar-analysis.git
-cd aditya-l1-solar-analysis
-pip install xgboost scikit-learn pandas numpy matplotlib seaborn jupyter
-jupyter notebook notebooks/Model2.ipynb
-```
+    git clone https://github.com/archiee04/aditya-l1-solar-analysis.git
+    cd aditya-l1-solar-analysis
+    pip install xgboost scikit-learn pandas numpy matplotlib seaborn jupyter
+    jupyter notebook notebooks/Model2.ipynb
 
 ---
 
@@ -179,4 +115,3 @@ jupyter notebook notebooks/Model2.ipynb
 
 **Archie Srivastava** — [LinkedIn](https://linkedin.com/in/archie-srivastava-36b81835b) · [Email](mailto:archie.srivastava04@gmail.com)  
 Thapar Institute of Engineering & Technology, Patiala
-
